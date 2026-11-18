@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>SJV_Indoor_Outdoor__c</fullName>
+    <label>Venue Environment</label>
+    <type>Picklist</type>
+    <required>false</required>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value><fullName>Outdoor</fullName><default>true</default><label>Outdoor</label></value>
+            <value><fullName>Indoor</fullName><default>false</default><label>Indoor</label></value>
+            <value><fullName>Mixed</fullName><default>false</default><label>Mixed</label></value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

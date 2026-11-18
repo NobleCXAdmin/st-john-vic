@@ -1,0 +1,761 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>66.0</apiVersion>
+    <choices>
+        <name>Choice_Alcohol_No</name>
+        <choiceText>No — Alcohol-free event</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>No</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>Choice_Alcohol_Unsure</name>
+        <choiceText>Unsure / Subject to council approval</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Unsure</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>Choice_Alcohol_Yes</name>
+        <choiceText>Yes — Licensed bars or BYO permitted</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Yes</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>Choice_Facility_No</name>
+        <choiceText>No — Request St John to supply mobile first aid marquee</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>No</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>Choice_Facility_Unsure</name>
+        <choiceText>Unsure / To be confirmed with venue management</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Unsure</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>Choice_Facility_Yes</name>
+        <choiceText>Yes — Venue has dedicated first aid room</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Yes</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>Choice_Risk_Combat</name>
+        <choiceText>Combat Sports / Martial Arts / Boxing</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Combat Sports</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>Choice_Risk_Heat</name>
+        <choiceText>Extreme Weather / Heatwave Conditions</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Extreme Weather / Heat</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>Choice_Risk_None</name>
+        <choiceText>None — Low impact community gathering</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>None</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>Choice_Risk_Other</name>
+        <choiceText>Other (Obstacle Course, Marathons, Inflatables)</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Other</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>Choice_Risk_Vehicles</name>
+        <choiceText>High Speed / Motorsport / Vehicle Demonstrations</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>High Speed / Vehicles</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>Choice_Risk_Watersports</name>
+        <choiceText>Watersports / Swimming / Open Water</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Watersports / Swimming</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>Choice_Type_Concert</name>
+        <choiceText>Concert / Music Festival</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Concert / Music Festival</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>Choice_Type_Corporate</name>
+        <choiceText>Corporate / Commercial Event</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Corporate / Commercial</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>Choice_Type_Festival</name>
+        <choiceText>Community Festival / Fair</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Community Festival</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>Choice_Type_Other</name>
+        <choiceText>Other Public Gathering</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Other</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>Choice_Type_School</name>
+        <choiceText>School / University Event</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>School / University</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>Choice_Type_Sporting</name>
+        <choiceText>Sporting Event / Tournament</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Sporting Event</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>Choice_Setting_Indoor</name>
+        <choiceText>Indoor (Stadium / Arena / Convention Centre)</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Indoor</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>Choice_Setting_Mixed</name>
+        <choiceText>Mixed (Indoor Pavilion &amp; Outdoor Grounds)</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Mixed</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>Choice_Setting_Outdoor</name>
+        <choiceText>Outdoor (Open Park / Foreshore / Street)</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Outdoor</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>Choice_Source_Call</name>
+        <choiceText>Inbound Phone Call</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Inbound Call</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>Choice_Source_Event</name>
+        <choiceText>Marketing / Community Event</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Marketing Event</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>Choice_Source_Partner</name>
+        <choiceText>Partner Referral</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Partner</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>Choice_Source_Referral</name>
+        <choiceText>Client Referral / Word of Mouth</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Referral</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>Choice_Source_Website</name>
+        <choiceText>Website / Online Form</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Website</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>Choice_Type_Market</name>
+        <choiceText>Exhibition / Community Market</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Exhibition / Market</stringValue>
+        </value>
+    </choices>
+    <description>Public Experience Cloud Screen Flow for capturing St John VIC event booking enquiries and initiating the BDM qualification lifecycle.</description>
+    <environments>Default</environments>
+    <formulas>
+        <name>formulaIsMultiDay</name>
+        <dataType>Boolean</dataType>
+        <expression>{!Start_Date} &lt;&gt; {!End_Date}</expression>
+    </formulas>
+    <formulas>
+        <name>formulaLeadCompany</name>
+        <dataType>String</dataType>
+        <expression>IF(ISBLANK({!Organisation_Name}), {!First_Name} &amp; &quot; &quot; &amp; {!Last_Name}, {!Organisation_Name})</expression>
+    </formulas>
+    <formulas>
+        <name>formulaLeadDescription</name>
+        <dataType>String</dataType>
+        <expression>&quot;Event Enquiry: &quot; &amp; {!Event_Name} &amp; &quot; (&quot; &amp; {!Event_Type_Select} &amp; &quot;). Venue: &quot; &amp; {!Venue_Name} &amp; &quot;. Expected Crowd: &quot; &amp; TEXT({!Expected_Attendance}) &amp; &quot; attendees.&quot;</expression>
+    </formulas>
+    <formulas>
+        <name>formulaLeadSource</name>
+        <dataType>String</dataType>
+        <expression>IF(ISBLANK({!Lead_Source_Select}), &quot;Website&quot;, {!Lead_Source_Select})</expression>
+    </formulas>
+    <formulas>
+        <name>formulaSubKey</name>
+        <dataType>String</dataType>
+        <expression>"FLOW-" &amp; TEXT({!$Flow.CurrentDateTime})</expression>
+    </formulas>
+    <formulas>
+        <name>formulaTaskSubject</name>
+        <dataType>String</dataType>
+        <expression>"Follow up new event enquiry: " &amp; {!Event_Name}</expression>
+    </formulas>
+    <formulas>
+        <name>formulaTomorrow</name>
+        <dataType>Date</dataType>
+        <expression>{!$Flow.CurrentDate} + 1</expression>
+    </formulas>
+    <interviewLabel>St John Event Booking Enquiry {!$Flow.CurrentDateTime}</interviewLabel>
+    <isAdditionalPermissionRequiredToRun>true</isAdditionalPermissionRequiredToRun>
+    <label>St John Event Booking Enquiry</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>Flow</processType>
+    <recordCreates>
+        <name>Create_Lead</name>
+        <label>Create Lead</label>
+        <locationX>176</locationX>
+        <locationY>674</locationY>
+        <assignRecordIdToReference>varLeadId</assignRecordIdToReference>
+        <connector>
+            <targetReference>Create_Follow_Up_Task</targetReference>
+        </connector>
+        <inputAssignments>
+            <field>Company</field>
+            <value>
+                <elementReference>formulaLeadCompany</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Description</field>
+            <value>
+                <elementReference>formulaLeadDescription</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Email</field>
+            <value>
+                <elementReference>Email_Address</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>FirstName</field>
+            <value>
+                <elementReference>First_Name</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>LastName</field>
+            <value>
+                <elementReference>Last_Name</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>LeadSource</field>
+            <value>
+                <elementReference>formulaLeadSource</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Phone</field>
+            <value>
+                <elementReference>Phone_Number</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>SJV_Alcohol_Present__c</field>
+            <value>
+                <elementReference>Alcohol_Select</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>SJV_Customer_Role__c</field>
+            <value>
+                <elementReference>Organiser_Role</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>SJV_Daily_Hours_Description__c</field>
+            <value>
+                <elementReference>Daily_Hours</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>SJV_End_Date__c</field>
+            <value>
+                <elementReference>End_Date</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>SJV_Event_Name__c</field>
+            <value>
+                <elementReference>Event_Name</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>SJV_Event_Type__c</field>
+            <value>
+                <elementReference>Event_Type_Select</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>SJV_Expected_Attendance__c</field>
+            <value>
+                <elementReference>Expected_Attendance</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>SJV_First_Aid_Post_Available__c</field>
+            <value>
+                <elementReference>Facility_Select</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>SJV_High_Risk_Activities__c</field>
+            <value>
+                <elementReference>High_Risk_Select</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>SJV_Indoor_Outdoor__c</field>
+            <value>
+                <elementReference>Setting_Select</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>SJV_Is_Multi_Day__c</field>
+            <value>
+                <elementReference>formulaIsMultiDay</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>SJV_Requested_Coverage_Notes__c</field>
+            <value>
+                <elementReference>Coverage_Notes</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>SJV_Start_Date__c</field>
+            <value>
+                <elementReference>Start_Date</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>SJV_Venue_Name__c</field>
+            <value>
+                <elementReference>Venue_Name</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Status</field>
+            <value>
+                <stringValue>New</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Street</field>
+            <value>
+                <elementReference>Venue_Address</elementReference>
+            </value>
+        </inputAssignments>
+        <object>Lead</object>
+    </recordCreates>
+    <recordCreates>
+        <name>Create_Follow_Up_Task</name>
+        <label>Create Follow-up Task</label>
+        <locationX>176</locationX>
+        <locationY>890</locationY>
+        <connector>
+            <targetReference>Screen_4_Confirmation</targetReference>
+        </connector>
+        <inputAssignments>
+            <field>ActivityDate</field>
+            <value>
+                <elementReference>formulaTomorrow</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Description</field>
+            <value>
+                <stringValue>Follow up new inbound website booking enquiry. Review organiser requirements and proceed with clinical risk assessment.</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Priority</field>
+            <value>
+                <stringValue>High</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Status</field>
+            <value>
+                <stringValue>Not Started</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Subject</field>
+            <value>
+                <elementReference>formulaTaskSubject</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>WhoId</field>
+            <value>
+                <elementReference>varLeadId</elementReference>
+            </value>
+        </inputAssignments>
+        <object>Task</object>
+    </recordCreates>
+    <runInMode>SystemModeWithoutSharing</runInMode>
+    <screens>
+        <name>Screen_1_Organiser_Details</name>
+        <label>About the Organiser</label>
+        <locationX>176</locationX>
+        <locationY>134</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <connector>
+            <targetReference>Screen_2_Event_Details</targetReference>
+        </connector>
+        <fields>
+            <name>Screen1_Header</name>
+            <fieldText>&lt;p&gt;&lt;strong style=&quot;font-size: 18px; color: #007A3D;&quot;&gt;St John Ambulance Victoria — Event Medical Services&lt;/strong&gt;&lt;/p&gt;&lt;p style=&quot;font-size: 13px; color: #555;&quot;&gt;Step 1 of 3: Please provide your contact and organisation details.&lt;/p&gt;&lt;hr/&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>First_Name</name>
+            <dataType>String</dataType>
+            <fieldText>First Name</fieldText>
+            <fieldType>InputField</fieldType>
+            <isRequired>true</isRequired>
+        </fields>
+        <fields>
+            <name>Last_Name</name>
+            <dataType>String</dataType>
+            <fieldText>Last Name</fieldText>
+            <fieldType>InputField</fieldType>
+            <isRequired>true</isRequired>
+        </fields>
+        <fields>
+            <name>Organisation_Name</name>
+            <dataType>String</dataType>
+            <fieldText>Organisation / Committee Name</fieldText>
+            <fieldType>InputField</fieldType>
+            <isRequired>true</isRequired>
+        </fields>
+        <fields>
+            <name>Email_Address</name>
+            <dataType>String</dataType>
+            <fieldText>Email Address</fieldText>
+            <fieldType>InputField</fieldType>
+            <isRequired>true</isRequired>
+        </fields>
+        <fields>
+            <name>Phone_Number</name>
+            <dataType>String</dataType>
+            <fieldText>Mobile / Phone Number</fieldText>
+            <fieldType>InputField</fieldType>
+            <isRequired>true</isRequired>
+        </fields>
+        <fields>
+            <name>Organiser_Role</name>
+            <dataType>String</dataType>
+            <fieldText>Your Role (e.g. Event Director, Operations Lead)</fieldText>
+            <fieldType>InputField</fieldType>
+            <isRequired>false</isRequired>
+        </fields>
+        <fields>
+            <name>Lead_Source_Select</name>
+            <choiceReferences>Choice_Source_Website</choiceReferences>
+            <choiceReferences>Choice_Source_Call</choiceReferences>
+            <choiceReferences>Choice_Source_Referral</choiceReferences>
+            <choiceReferences>Choice_Source_Event</choiceReferences>
+            <choiceReferences>Choice_Source_Partner</choiceReferences>
+            <dataType>String</dataType>
+            <defaultSelectedChoiceReference>Choice_Source_Website</defaultSelectedChoiceReference>
+            <fieldText>How did you hear about us / Intake Channel</fieldText>
+            <fieldType>DropdownBox</fieldType>
+            <isRequired>false</isRequired>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <screens>
+        <name>Screen_2_Event_Details</name>
+        <label>Event Details &amp; Logistics</label>
+        <locationX>176</locationX>
+        <locationY>242</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <connector>
+            <targetReference>Screen_3_Risk_Conditions</targetReference>
+        </connector>
+        <fields>
+            <name>Screen2_Header</name>
+            <fieldText>&lt;p&gt;&lt;strong style=&quot;font-size: 18px; color: #007A3D;&quot;&gt;Event Details &amp;amp; Timing&lt;/strong&gt;&lt;/p&gt;&lt;p style=&quot;font-size: 13px; color: #555;&quot;&gt;Step 2 of 3: Tell us about the event location, dates, and expected crowd size.&lt;/p&gt;&lt;hr/&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>Event_Name</name>
+            <dataType>String</dataType>
+            <fieldText>Event Name</fieldText>
+            <fieldType>InputField</fieldType>
+            <isRequired>true</isRequired>
+        </fields>
+        <fields>
+            <name>Event_Type_Select</name>
+            <choiceReferences>Choice_Type_Festival</choiceReferences>
+            <choiceReferences>Choice_Type_Market</choiceReferences>
+            <choiceReferences>Choice_Type_Sporting</choiceReferences>
+            <choiceReferences>Choice_Type_Concert</choiceReferences>
+            <choiceReferences>Choice_Type_Corporate</choiceReferences>
+            <choiceReferences>Choice_Type_School</choiceReferences>
+            <choiceReferences>Choice_Type_Other</choiceReferences>
+            <dataType>String</dataType>
+            <defaultSelectedChoiceReference>Choice_Type_Festival</defaultSelectedChoiceReference>
+            <fieldText>Event Category</fieldText>
+            <fieldType>DropdownBox</fieldType>
+            <isRequired>true</isRequired>
+        </fields>
+        <fields>
+            <name>Expected_Attendance</name>
+            <dataType>Number</dataType>
+            <fieldText>Expected Total Attendance (Crowd Size)</fieldText>
+            <fieldType>InputField</fieldType>
+            <isRequired>true</isRequired>
+            <scale>0</scale>
+        </fields>
+        <fields>
+            <name>Venue_Name</name>
+            <dataType>String</dataType>
+            <fieldText>Venue / Location Name (e.g. Catani Gardens, Albert Park)</fieldText>
+            <fieldType>InputField</fieldType>
+            <isRequired>true</isRequired>
+        </fields>
+        <fields>
+            <name>Venue_Address</name>
+            <dataType>String</dataType>
+            <fieldText>Venue Street Address &amp; Suburb</fieldText>
+            <fieldType>InputField</fieldType>
+            <isRequired>true</isRequired>
+        </fields>
+        <fields>
+            <name>Start_Date</name>
+            <dataType>Date</dataType>
+            <fieldText>Event Start Date</fieldText>
+            <fieldType>InputField</fieldType>
+            <isRequired>true</isRequired>
+        </fields>
+        <fields>
+            <name>End_Date</name>
+            <dataType>Date</dataType>
+            <fieldText>Event End Date</fieldText>
+            <fieldType>InputField</fieldType>
+            <isRequired>true</isRequired>
+        </fields>
+        <fields>
+            <name>Daily_Hours</name>
+            <dataType>String</dataType>
+            <fieldText>Daily Operating Hours (e.g. 09:00 - 17:00)</fieldText>
+            <fieldType>InputField</fieldType>
+            <isRequired>false</isRequired>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <screens>
+        <name>Screen_3_Risk_Conditions</name>
+        <label>Operational Conditions</label>
+        <locationX>176</locationX>
+        <locationY>350</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <connector>
+            <targetReference>Create_Lead</targetReference>
+        </connector>
+        <fields>
+            <name>Screen3_Header</name>
+            <fieldText>&lt;p&gt;&lt;strong style=&quot;font-size: 18px; color: #007A3D;&quot;&gt;Clinical Risk &amp;amp; Site Environment&lt;/strong&gt;&lt;/p&gt;&lt;p style=&quot;font-size: 13px; color: #555;&quot;&gt;Step 3 of 3: These answers allow St John clinicians to evaluate medical coverage requirements in accordance with Department of Health regulations.&lt;/p&gt;&lt;hr/&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>Setting_Select</name>
+            <choiceReferences>Choice_Setting_Outdoor</choiceReferences>
+            <choiceReferences>Choice_Setting_Indoor</choiceReferences>
+            <choiceReferences>Choice_Setting_Mixed</choiceReferences>
+            <dataType>String</dataType>
+            <fieldText>Event Setting / Environment</fieldText>
+            <fieldType>RadioButtons</fieldType>
+            <isRequired>true</isRequired>
+        </fields>
+        <fields>
+            <name>Alcohol_Select</name>
+            <choiceReferences>Choice_Alcohol_Yes</choiceReferences>
+            <choiceReferences>Choice_Alcohol_No</choiceReferences>
+            <choiceReferences>Choice_Alcohol_Unsure</choiceReferences>
+            <dataType>String</dataType>
+            <fieldText>Will Alcohol be Served or Consumed?</fieldText>
+            <fieldType>RadioButtons</fieldType>
+            <isRequired>true</isRequired>
+        </fields>
+        <fields>
+            <name>High_Risk_Select</name>
+            <choiceReferences>Choice_Risk_None</choiceReferences>
+            <choiceReferences>Choice_Risk_Watersports</choiceReferences>
+            <choiceReferences>Choice_Risk_Vehicles</choiceReferences>
+            <choiceReferences>Choice_Risk_Combat</choiceReferences>
+            <choiceReferences>Choice_Risk_Heat</choiceReferences>
+            <choiceReferences>Choice_Risk_Other</choiceReferences>
+            <dataType>String</dataType>
+            <fieldText>High-Risk Activities or Environmental Hazards</fieldText>
+            <fieldType>DropdownBox</fieldType>
+            <isRequired>true</isRequired>
+        </fields>
+        <fields>
+            <name>Facility_Select</name>
+            <choiceReferences>Choice_Facility_Yes</choiceReferences>
+            <choiceReferences>Choice_Facility_No</choiceReferences>
+            <choiceReferences>Choice_Facility_Unsure</choiceReferences>
+            <dataType>String</dataType>
+            <fieldText>Dedicated First Aid Facilities on Site</fieldText>
+            <fieldType>RadioButtons</fieldType>
+            <isRequired>true</isRequired>
+        </fields>
+        <fields>
+            <name>Coverage_Notes</name>
+            <fieldText>Special Coverage Requests or Site Access Instructions</fieldText>
+            <fieldType>LargeTextArea</fieldType>
+            <isRequired>false</isRequired>
+        </fields>
+        <fields>
+            <name>Enquiry_Disclaimer_Ack</name>
+            <dataType>Boolean</dataType>
+            <fieldText>I acknowledge this enquiry will be evaluated by St John clinical staff to determine required medical coverage, and does not constitute a binding quote or booking confirmation.</fieldText>
+            <fieldType>InputField</fieldType>
+            <isRequired>true</isRequired>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <screens>
+        <name>Screen_4_Confirmation</name>
+        <label>Enquiry Received</label>
+        <locationX>176</locationX>
+        <locationY>998</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <fields>
+            <name>Confirmation_Display</name>
+            <fieldText>&lt;div style=&quot;text-align: center; padding: 20px;&quot;&gt;
+  &lt;p&gt;&lt;strong style=&quot;font-size: 24px; color: #007A3D;&quot;&gt;Thank You! Your Enquiry Has Been Received&lt;/strong&gt;&lt;/p&gt;
+  &lt;p style=&quot;font-size: 15px; margin-top: 8px;&quot;&gt;Your booking reference number is: &lt;strong style=&quot;background-color: #eef4f0; padding: 4px 10px; border-radius: 4px; border: 1px solid #007A3D; color: #007A3D;&quot;&gt;{!varLeadId}&lt;/strong&gt;&lt;/p&gt;
+&lt;/div&gt;
+
+&lt;div style=&quot;background-color: #f8f9fa; border: 1px solid #e2e8f0; border-radius: 8px; padding: 16px; margin: 16px 0;&quot;&gt;
+  &lt;p&gt;&lt;strong style=&quot;color: #1a202c;&quot;&gt;Enquiry Summary:&lt;/strong&gt;&lt;/p&gt;
+  &lt;ul style=&quot;margin: 8px 0 0 20px;&quot;&gt;
+    &lt;li&gt;&lt;strong&gt;Event:&lt;/strong&gt; {!Event_Name}&lt;/li&gt;
+    &lt;li&gt;&lt;strong&gt;Dates:&lt;/strong&gt; {!Start_Date} to {!End_Date}&lt;/li&gt;
+    &lt;li&gt;&lt;strong&gt;Venue:&lt;/strong&gt; {!Venue_Name}&lt;/li&gt;
+    &lt;li&gt;&lt;strong&gt;Expected Attendance:&lt;/strong&gt; {!Expected_Attendance} attendees&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/div&gt;
+
+&lt;div style=&quot;border-left: 4px solid #007A3D; padding-left: 12px; margin-top: 16px;&quot;&gt;
+  &lt;p&gt;&lt;strong&gt;What happens next?&lt;/strong&gt;&lt;/p&gt;
+  &lt;ol style=&quot;margin: 8px 0 0 20px;&quot;&gt;
+    &lt;li&gt;St John Clinical Operations will review your event requirements against Victorian Department of Health guidelines.&lt;/li&gt;
+    &lt;li&gt;A Business Development Manager will prepare a formal health services proposal with recommended volunteer and clinician coverage.&lt;/li&gt;
+    &lt;li&gt;We will contact you directly via phone or email to finalize details.&lt;/li&gt;
+  &lt;/ol&gt;
+&lt;/div&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <start>
+        <locationX>50</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Screen_1_Organiser_Details</targetReference>
+        </connector>
+    </start>
+    <status>Active</status>
+    <variables>
+        <name>varLeadId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>true</isOutput>
+    </variables>
+</Flow>

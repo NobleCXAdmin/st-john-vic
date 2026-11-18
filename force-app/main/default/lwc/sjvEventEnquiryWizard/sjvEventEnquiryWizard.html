@@ -1,0 +1,236 @@
+<template>
+    <lightning-card title="St John Ambulance VIC — Event Health Services Enquiry" icon-name="standard:event">
+        <div class="slds-p-horizontal_large slds-p-vertical_medium">
+            <!-- Progress Indicator -->
+            <lightning-progress-indicator current-step={currentStep} type="path" variant="base" class="slds-m-bottom_large">
+                <lightning-progress-step label="Organiser" value="1"></lightning-progress-step>
+                <lightning-progress-step label="Event Info" value="2"></lightning-progress-step>
+                <lightning-progress-step label="Dates & Venue" value="3"></lightning-progress-step>
+                <lightning-progress-step label="Conditions" value="4"></lightning-progress-step>
+                <lightning-progress-step label="Coverage" value="5"></lightning-progress-step>
+                <lightning-progress-step label="Review" value="6"></lightning-progress-step>
+                <lightning-progress-step label="Confirmation" value="7"></lightning-progress-step>
+            </lightning-progress-indicator>
+
+            <!-- Spinner -->
+            <template if:true={isLoading}>
+                <lightning-spinner alternative-text="Processing" size="medium"></lightning-spinner>
+            </template>
+
+            <!-- Error Banner -->
+            <template if:true={errorMessage}>
+                <div class="slds-notify slds-notify_alert slds-alert_error slds-m-bottom_medium" role="alert">
+                    <span class="slds-assistive-text">error</span>
+                    <h2>{errorMessage}</h2>
+                </div>
+            </template>
+
+            <!-- STEP 1: Organiser Details -->
+            <template if:true={isStep1}>
+                <div class="step-container">
+                    <h3 class="slds-text-heading_small slds-m-bottom_medium">Step 1: About the Organiser</h3>
+                    <div class="slds-grid slds-gutters slds-wrap">
+                        <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2">
+                            <lightning-input label="First Name" value={formData.firstName} data-field="firstName" onchange={handleInputChange}></lightning-input>
+                        </div>
+                        <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2">
+                            <lightning-input label="Last Name" required value={formData.lastName} data-field="lastName" onchange={handleInputChange}></lightning-input>
+                        </div>
+                        <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2">
+                            <lightning-input label="Organisation / Client Name" required value={formData.organisationName} data-field="organisationName" onchange={handleInputChange}></lightning-input>
+                        </div>
+                        <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2">
+                            <lightning-input label="Email Address" type="email" required value={formData.email} data-field="email" onchange={handleInputChange}></lightning-input>
+                        </div>
+                        <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2">
+                            <lightning-input label="Contact Phone" type="tel" value={formData.phone} data-field="phone" onchange={handleInputChange}></lightning-input>
+                        </div>
+                        <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2">
+                            <lightning-input label="Your Role / Title" value={formData.customerRole} data-field="customerRole" placeholder="e.g. Event Director, Operations Manager" onchange={handleInputChange}></lightning-input>
+                        </div>
+                        <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2">
+                            <lightning-combobox label="Have you booked St John VIC before?" value={formData.previousCustomer} data-field="previousCustomer" options={previousCustomerOptions} onchange={handleInputChange}></lightning-combobox>
+                        </div>
+                    </div>
+                </div>
+            </template>
+
+            <!-- STEP 2: Event Details -->
+            <template if:true={isStep2}>
+                <div class="step-container">
+                    <h3 class="slds-text-heading_small slds-m-bottom_medium">Step 2: About the Event</h3>
+                    <div class="slds-grid slds-gutters slds-wrap">
+                        <div class="slds-col slds-size_1-of-1 slds-medium-size_2-of-3">
+                            <lightning-input label="Event Name" required value={formData.eventName} data-field="eventName" onchange={handleInputChange}></lightning-input>
+                        </div>
+                        <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-3">
+                            <lightning-combobox label="Event Type" value={formData.eventType} data-field="eventType" options={eventTypeOptions} onchange={handleInputChange}></lightning-combobox>
+                        </div>
+                        <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2">
+                            <lightning-input label="Expected Peak Attendance" type="number" value={formData.expectedAttendance} data-field="expectedAttendance" onchange={handleInputChange}></lightning-input>
+                        </div>
+                        <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2">
+                            <lightning-combobox label="Public or Private Event" value={formData.publicOrPrivate} data-field="publicOrPrivate" options={publicPrivateOptions} onchange={handleInputChange}></lightning-combobox>
+                        </div>
+                        <div class="slds-col slds-size_1-of-1">
+                            <lightning-textarea label="Brief Event Description" value={formData.eventDescription} data-field="eventDescription" placeholder="Overview of the event, target audience, key activities..." onchange={handleInputChange}></lightning-textarea>
+                        </div>
+                        <div class="slds-col slds-size_1-of-1">
+                            <lightning-input type="checkbox" label="These details are provisional (dates/attendance may be updated)" checked={formData.isProvisional} data-field="isProvisional" onchange={handleCheckboxChange}></lightning-input>
+                        </div>
+                    </div>
+                </div>
+            </template>
+
+            <!-- STEP 3: Dates & Venue -->
+            <template if:true={isStep3}>
+                <div class="step-container">
+                    <h3 class="slds-text-heading_small slds-m-bottom_medium">Step 3: Dates, Times & Location</h3>
+                    <div class="slds-grid slds-gutters slds-wrap">
+                        <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2">
+                            <lightning-input label="Venue / Site Name" value={formData.venueName} data-field="venueName" placeholder="e.g. Catani Gardens, St Kilda Foreshore" onchange={handleInputChange}></lightning-input>
+                        </div>
+                        <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2">
+                            <lightning-input label="Venue Address / Suburb" value={formData.venueAddress} data-field="venueAddress" onchange={handleInputChange}></lightning-input>
+                        </div>
+                        <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-3">
+                            <lightning-input label="Start Date" type="date" required value={formData.startDate} data-field="startDate" onchange={handleInputChange}></lightning-input>
+                        </div>
+                        <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-3">
+                            <lightning-input label="End Date" type="date" required value={formData.endDate} data-field="endDate" onchange={handleInputChange}></lightning-input>
+                        </div>
+                        <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-3">
+                            <lightning-combobox label="Timezone" value={formData.timezone} data-field="timezone" options={timezoneOptions} onchange={handleInputChange}></lightning-combobox>
+                        </div>
+                        <div class="slds-col slds-size_1-of-1">
+                            <lightning-input label="Daily Operating Hours Description" value={formData.dailyHoursDescription} data-field="dailyHoursDescription" placeholder="e.g. Day 1: 09:00 - 18:00, Day 2: 10:00 - 16:00" onchange={handleInputChange}></lightning-input>
+                        </div>
+                        <div class="slds-col slds-size_1-of-1">
+                            <lightning-input type="checkbox" label="This is a multi-day event requiring individual daily operational shifts" checked={formData.isMultiDay} data-field="isMultiDay" onchange={handleCheckboxChange}></lightning-input>
+                        </div>
+                    </div>
+                </div>
+            </template>
+
+            <!-- STEP 4: Risk & Operational Conditions -->
+            <template if:true={isStep4}>
+                <div class="step-container">
+                    <h3 class="slds-text-heading_small slds-m-bottom_medium">Step 4: Operational & Risk Profile</h3>
+                    <div class="slds-notify slds-notify_alert slds-alert_info slds-m-bottom_medium" role="alert">
+                        <span class="slds-assistive-text">info</span>
+                        <h2>Note: These responses assist St John VIC clinicians in calculating resource requirements.</h2>
+                    </div>
+                    <div class="slds-grid slds-gutters slds-wrap">
+                        <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2">
+                            <lightning-combobox label="Venue Environment" value={formData.indoorOutdoor} data-field="indoorOutdoor" options={indoorOutdoorOptions} onchange={handleInputChange}></lightning-combobox>
+                        </div>
+                        <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2">
+                            <lightning-combobox label="Will alcohol be served / sold?" value={formData.alcoholPresent} data-field="alcoholPresent" options={alcoholOptions} onchange={handleInputChange}></lightning-combobox>
+                        </div>
+                        <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2">
+                            <lightning-combobox label="High-Risk Activities or Hazards" value={formData.highRiskActivities} data-field="highRiskActivities" options={highRiskOptions} onchange={handleInputChange}></lightning-combobox>
+                        </div>
+                        <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2">
+                            <lightning-combobox label="Does the venue have an existing First Aid room?" value={formData.firstAidPostAvailable} data-field="firstAidPostAvailable" options={firstAidPostOptions} onchange={handleInputChange}></lightning-combobox>
+                        </div>
+                    </div>
+                </div>
+            </template>
+
+            <!-- STEP 5: Coverage & Logistics -->
+            <template if:true={isStep5}>
+                <div class="step-container">
+                    <h3 class="slds-text-heading_small slds-m-bottom_medium">Step 5: Requested Coverage & Logistics</h3>
+                    <div class="slds-grid slds-gutters slds-wrap">
+                        <div class="slds-col slds-size_1-of-1">
+                            <lightning-textarea label="Requested Medical / First Aid Coverage Notes" value={formData.requestedCoverageNotes} data-field="requestedCoverageNotes" placeholder="Any specific requirements (e.g. mobile roving responders, fixed medical post, bicycle responders)..." onchange={handleInputChange}></lightning-textarea>
+                        </div>
+                        <div class="slds-col slds-size_1-of-1">
+                            <lightning-textarea label="Site Access, Induction & Parking Instructions" value={formData.setupAccessInstructions} data-field="setupAccessInstructions" placeholder="Vehicle access gates, parking arrangements, security contact..." onchange={handleInputChange}></lightning-textarea>
+                        </div>
+                        <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2">
+                            <lightning-input label="Event Day Primary Contact Name" value={formData.eventDayContactName} data-field="eventDayContactName" onchange={handleInputChange}></lightning-input>
+                        </div>
+                        <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2">
+                            <lightning-input label="Event Day Primary Contact Mobile" type="tel" value={formData.eventDayContactPhone} data-field="eventDayContactPhone" onchange={handleInputChange}></lightning-input>
+                        </div>
+                    </div>
+                </div>
+            </template>
+
+            <!-- STEP 6: Review & Disclaimers -->
+            <template if:true={isStep6}>
+                <div class="step-container">
+                    <h3 class="slds-text-heading_small slds-m-bottom_medium">Step 6: Review & Disclaimers</h3>
+                    
+                    <div class="slds-box slds-theme_shade slds-m-bottom_medium">
+                        <h4 class="slds-text-title_bold slds-m-bottom_x-small">Enquiry Summary</h4>
+                        <div class="slds-grid slds-gutters slds-wrap">
+                            <div class="slds-col slds-size_1-of-2 slds-m-bottom_x-small"><strong>Event Name:</strong> {formData.eventName}</div>
+                            <div class="slds-col slds-size_1-of-2 slds-m-bottom_x-small"><strong>Organisation:</strong> {formData.organisationName}</div>
+                            <div class="slds-col slds-size_1-of-2 slds-m-bottom_x-small"><strong>Dates:</strong> {formData.startDate} to {formData.endDate}</div>
+                            <div class="slds-col slds-size_1-of-2 slds-m-bottom_x-small"><strong>Venue:</strong> {formData.venueName} ({formData.venueAddress})</div>
+                            <div class="slds-col slds-size_1-of-2 slds-m-bottom_x-small"><strong>Expected Crowd:</strong> {formData.expectedAttendance} attendees</div>
+                            <div class="slds-col slds-size_1-of-2 slds-m-bottom_x-small"><strong>Environment:</strong> {formData.indoorOutdoor}</div>
+                            <div class="slds-col slds-size_1-of-2 slds-m-bottom_x-small"><strong>Alcohol:</strong> {formData.alcoholPresent}</div>
+                            <div class="slds-col slds-size_1-of-2 slds-m-bottom_x-small"><strong>Contact:</strong> {formData.firstName} {formData.lastName} ({formData.email})</div>
+                        </div>
+                    </div>
+
+                    <!-- Mandatory Clinical Disclaimer -->
+                    <div class="slds-notify slds-notify_alert slds-alert_warning slds-m-bottom_medium" role="alert">
+                        <span class="slds-assistive-text">warning</span>
+                        <h2><strong>Important Notice:</strong> Illustrative demo rules, not approved for operational use. A St John VIC Business Development Manager and Clinical Reviewer will review your enquiry before formal confirmation.</h2>
+                    </div>
+
+                    <div class="slds-m-top_medium">
+                        <lightning-input type="checkbox" label="I acknowledge that this submission is an enquiry and does not constitute confirmed event coverage or a binding medical contract." checked={acknowledgementChecked} onchange={handleAckChange}></lightning-input>
+                        <lightning-input type="checkbox" label="I agree to receive communications regarding this enquiry and relevant St John VIC services." checked={formData.marketingConsent} data-field="marketingConsent" onchange={handleCheckboxChange}></lightning-input>
+                    </div>
+                </div>
+            </template>
+
+            <!-- STEP 7: Confirmation -->
+            <template if:true={isStep7}>
+                <div class="slds-text-align_center slds-p-around_large">
+                    <lightning-icon icon-name="action:approval" size="large" class="slds-m-bottom_medium"></lightning-icon>
+                    <h2 class="slds-text-heading_medium slds-text-color_success slds-m-bottom_small">Thank You! Your Enquiry Has Been Lodged</h2>
+                    <p class="slds-text-heading_small slds-m-bottom_medium">
+                        Reference Number: <strong class="slds-text-color_error">{submissionResult.enquiryNumber}</strong>
+                    </p>
+                    <p class="slds-text-body_regular slds-m-bottom_large">
+                        A St John VIC Business Development Manager has been assigned to your request and will contact <strong>{formData.email}</strong> shortly.
+                    </p>
+
+                    <template if:true={submissionResult.leadId}>
+                        <div class="slds-box slds-theme_default slds-m-around_medium" style="max-width: 500px; margin: 0 auto;">
+                            <p class="slds-text-title_caps slds-m-bottom_x-small">Internal Demo Navigation</p>
+                            <p class="slds-m-bottom_small">Salesforce Lead created with ID: <code>{submissionResult.leadId}</code></p>
+                            <lightning-button variant="brand" label="Open Created Lead in Salesforce" onclick={navigateToLead}></lightning-button>
+                        </div>
+                    </template>
+                </div>
+            </template>
+
+            <!-- Bottom Navigation Buttons -->
+            <template if:false={isStep7}>
+                <div class="slds-m-top_large slds-grid slds-grid_align-spread">
+                    <div>
+                        <template if:true={hasPreviousStep}>
+                            <lightning-button label="Previous" onclick={handlePrevious}></lightning-button>
+                        </template>
+                    </div>
+                    <div>
+                        <template if:true={hasNextStep}>
+                            <lightning-button variant="brand" label="Next Step" onclick={handleNext}></lightning-button>
+                        </template>
+                        <template if:true={isStep6}>
+                            <lightning-button variant="brand" label="Submit Booking Enquiry" disabled={isSubmitDisabled} onclick={handleSubmit}></lightning-button>
+                        </template>
+                    </div>
+                </div>
+            </template>
+        </div>
+    </lightning-card>
+</template>
+

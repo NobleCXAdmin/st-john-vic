@@ -1,0 +1,194 @@
+<template>
+    <lightning-card title="Rosterfy Operational Transfer &amp; Shift Handoff" icon-name="standard:shift">
+        <!-- Actions in Card Header -->
+        <div slot="actions">
+            <template if:true={isSynced}>
+                <lightning-button-group>
+                    <lightning-button variant="brand-outline" label="Open in Rosterfy" icon-name="utility:new_window" onclick={handleOpenRemote}></lightning-button>
+                    <lightning-button variant="neutral" label="Send Approved Updates" icon-name="utility:sync" onclick={handleOpenPreview}></lightning-button>
+                </lightning-button-group>
+            </template>
+            <template if:true={isPartial}>
+                <lightning-button-group>
+                    <lightning-button variant="destructive" label="Retry Failed Shifts" icon-name="utility:refresh" onclick={handleRetry}></lightning-button>
+                </lightning-button-group>
+            </template>
+            <template if:false={isSynced}>
+                <lightning-button-group>
+                    <lightning-button variant="brand" label="Create in Rosterfy" icon-name="utility:forward" onclick={handleOpenPreview}></lightning-button>
+                </lightning-button-group>
+            </template>
+        </div>
+
+        <div class="slds-p-horizontal_medium slds-p-bottom_medium">
+            <template if:true={isLoading}>
+                <lightning-spinner alternative-text="Connecting to Rosterfy API" size="medium"></lightning-spinner>
+            </template>
+
+            <!-- Error Banner -->
+            <template if:true={errorMessage}>
+                <div class="slds-notify slds-notify_alert slds-alert_error slds-m-bottom_small" role="alert">
+                    <span class="slds-assistive-text">error</span>
+                    <h2>{errorMessage}</h2>
+                </div>
+            </template>
+
+            <!-- Success Banner -->
+            <template if:true={successMessage}>
+                <div class="slds-notify slds-notify_alert slds-alert_success slds-m-bottom_small" role="alert">
+                    <span class="slds-assistive-text">success</span>
+                    <h2>{successMessage}</h2>
+                </div>
+            </template>
+
+            <!-- Status Card -->
+            <div class="slds-box slds-theme_shade slds-m-bottom_medium">
+                <div class="slds-grid slds-gutters slds-wrap slds-grid_vertical-align-center">
+                    <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-4">
+                        <span class="slds-text-title_caps">Sync State</span>
+                        <div class="slds-text-heading_medium">
+                            <span class={syncBadgeClass}>{syncState}</span>
+                        </div>
+                        <p class="slds-text-body_small slds-text-color_weak">Publication: Published</p>
+                        <template if:false={integrationActive}>
+                            <p class="slds-text-body_small slds-text-color_error">⚠ Simulation Mode (integration inactive)</p>
+                        </template>
+                    </div>
+
+                    <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-4">
+                        <span class="slds-text-title_caps">Remote Rosterfy Event</span>
+                        <div class="slds-text-heading_small">
+                            <template if:true={remoteEventId}>
+                                <code>{remoteEventId}</code>
+                            </template>
+                            <template if:false={remoteEventId}>
+                                <span class="slds-text-color_weak">Not Created Yet</span>
+                            </template>
+                        </div>
+                        <p class="slds-text-body_small slds-text-color_weak">Source Key: {sourceEventKey}</p>
+                        <template if:true={remoteEventUrl}>
+                            <a href={remoteEventUrl} target="_blank" class="slds-text-body_small">Open in Rosterfy ↗</a>
+                        </template>
+                    </div>
+
+                    <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-4">
+                        <span class="slds-text-title_caps">Commercial Gate</span>
+                        <div class="slds-text-heading_small">
+                            <template if:true={isWon}>
+                                <span class="slds-text-color_success">Closed Won Approved</span>
+                            </template>
+                            <template if:false={isWon}>
+                                <span class="slds-text-color_error">Opportunity Pending</span>
+                            </template>
+                        </div>
+                        <p class="slds-text-body_small slds-text-color_weak">Plan Revision: v{approvedRevision}</p>
+                    </div>
+
+                    <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-4">
+                        <span class="slds-text-title_caps">Staff-Operated Rule</span>
+                        <p class="slds-text-body_small">
+                            <em>Explicit staff action required. Closed Won qualifies the event but never auto-sends.</em>
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Shifts Outbox Table -->
+            <div class="slds-m-top_medium">
+                <h3 class="slds-text-title_bold slds-m-bottom_x-small">Outbound Operational Shifts ({shifts.length} slots)</h3>
+                <table class="slds-table slds-table_cell-buffer slds-table_bordered">
+                    <thead>
+                        <tr class="slds-line-height_reset">
+                            <th scope="col">Shift Role</th>
+                            <th scope="col">Date</th>
+                            <th scope="col">Times</th>
+                            <th scope="col">Capacity</th>
+                            <th scope="col">Rosterfy Shift ID</th>
+                            <th scope="col">Sync Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <template for:each={shifts} for:item="s">
+                            <tr key={s.Id}>
+                                <td><strong>{s.JobPosition.Title}</strong></td>
+                                <td>{s.StartDate}</td>
+                                <td>{s.formattedTimes}</td>
+                                <td>{s.MaximumAttendeesCount} volunteers</td>
+                                <td>
+                                    <template if:true={s.SJV_Remote_Shift_Id__c}>
+                                        <code>{s.SJV_Remote_Shift_Id__c}</code>
+                                    </template>
+                                    <template if:false={s.SJV_Remote_Shift_Id__c}>
+                                        <span class="slds-text-color_weak">Pending Transfer</span>
+                                    </template>
+                                </td>
+                                <td>
+                                    <span class="slds-badge">{s.SJV_Sync_Status__c}</span>
+                                </td>
+                            </tr>
+                        </template>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- TRANSFER PREVIEW MODAL -->
+        <template if:true={isPreviewModalOpen}>
+            <section role="dialog" tabindex="-1" class="slds-modal slds-fade-in-open slds-modal_medium" aria-modal="true">
+                <div class="slds-modal__container">
+                    <header class="slds-modal__header">
+                        <h2 class="slds-modal__title slds-hyphenate">Preview Outbound Rosterfy Transfer</h2>
+                        <p class="slds-m-top_x-small slds-text-color_weak">
+                            Verify canonical event and shift payload prior to queuing remote creation via Rosterfy API.
+                        </p>
+                    </header>
+                    <div class="slds-modal__content slds-p-around_medium">
+                        <template if:true={previewPayload.validationError}>
+                            <div class="slds-notify slds-notify_alert slds-alert_error slds-m-bottom_medium" role="alert">
+                                <h2>{previewPayload.validationError}</h2>
+                            </div>
+                        </template>
+
+                        <div class="slds-box slds-theme_shade slds-m-bottom_medium">
+                            <div class="slds-grid slds-gutters slds-wrap">
+                                <div class="slds-col slds-size_1-of-2 slds-m-bottom_x-small"><strong>Event Name:</strong> {previewPayload.eventName}</div>
+                                <div class="slds-col slds-size_1-of-2 slds-m-bottom_x-small"><strong>Publication Mode:</strong> {previewPayload.publicationMode}</div>
+                                <div class="slds-col slds-size_1-of-2 slds-m-bottom_x-small"><strong>Timezone:</strong> {previewPayload.timezone}</div>
+                                <div class="slds-col slds-size_1-of-2 slds-m-bottom_x-small"><strong>Approved Revision:</strong> v{previewPayload.approvedRevision}</div>
+                                <div class="slds-col slds-size_1-of-1 slds-m-bottom_x-small"><strong>Source Event Key:</strong> <code>{previewPayload.sourceEventKey}</code></div>
+                            </div>
+                        </div>
+
+                        <h4 class="slds-text-title_bold slds-m-bottom_x-small">Shifts to Create / Synchronize:</h4>
+                        <table class="slds-table slds-table_cell-buffer slds-table_bordered">
+                            <thead>
+                                <tr class="slds-line-height_reset">
+                                    <th scope="col">Role Code</th>
+                                    <th scope="col">Role Title</th>
+                                    <th scope="col">Capacity</th>
+                                    <th scope="col">Shift Key</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <template for:each={previewPayload.shifts} for:item="ps">
+                                    <tr key={ps.sourceShiftKey}>
+                                        <td><code>{ps.roleCode}</code></td>
+                                        <td>{ps.roleName}</td>
+                                        <td>{ps.capacity} volunteers</td>
+                                        <td><code>{ps.sourceShiftKey}</code></td>
+                                    </tr>
+                                </template>
+                            </tbody>
+                        </table>
+                    </div>
+                    <footer class="slds-modal__footer">
+                        <lightning-button variant="neutral" label="Cancel" onclick={closePreviewModal} class="slds-m-right_x-small"></lightning-button>
+                        <lightning-button variant="brand" label="Confirm & Transfer to Rosterfy" disabled={isTransferBlocked} onclick={handleConfirmTransfer}></lightning-button>
+                    </footer>
+                </div>
+            </section>
+            <div class="slds-backdrop slds-backdrop_open"></div>
+        </template>
+    </lightning-card>
+</template>
+

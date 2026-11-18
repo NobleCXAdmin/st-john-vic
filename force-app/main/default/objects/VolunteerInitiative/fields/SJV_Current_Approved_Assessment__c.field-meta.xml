@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>SJV_Current_Approved_Assessment__c</fullName>
+    <label>Current Approved Assessment</label>
+    <type>Lookup</type>
+    <required>false</required>
+    <referenceTo>SJV_Risk_Assessment__c</referenceTo>
+    <relationshipLabel>Current Approved Assessment</relationshipLabel>
+    <relationshipName>Initiatives_Currently_Approved</relationshipName>
+    <deleteConstraint>SetNull</deleteConstraint>
+</CustomField>

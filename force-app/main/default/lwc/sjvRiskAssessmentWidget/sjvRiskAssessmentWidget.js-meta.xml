@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>66.0</apiVersion>
+    <isExposed>true</isExposed>
+    <masterLabel>St John VIC Clinical Risk Assessment &amp; Resource Planning</masterLabel>
+    <description>Deterministic clinical risk assessment engine, resource requirements calculation, and version management. v2.</description>
+    <targets>
+        <target>lightning__RecordPage</target>
+    </targets>
+    <targetConfigs>
+        <targetConfig targets="lightning__RecordPage">
+            <property name="recordId" type="String" label="Record ID" description="Automatically set to the current record ID." />
+            <objects>
+                <object>VolunteerInitiative</object>
+                <object>Opportunity</object>
+                <object>SJV_Risk_Assessment__c</object>
+            </objects>
+        </targetConfig>
+    </targetConfigs>
+</LightningComponentBundle>

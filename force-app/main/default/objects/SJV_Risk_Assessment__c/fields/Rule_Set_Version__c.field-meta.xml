@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Rule_Set_Version__c</fullName>
+    <label>Rule Set Version</label>
+    <type>Text</type>
+    <required>false</required>
+    <length>50</length>
+    <unique>false</unique>
+    <externalId>false</externalId>
+    <defaultValue>"v1.0-Illustrative"</defaultValue>
+</CustomField>

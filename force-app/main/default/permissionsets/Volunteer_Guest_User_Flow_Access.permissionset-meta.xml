@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <flowAccesses>
+        <enabled>true</enabled>
+        <flow>Volunteer_Guest_User_Sign_Up</flow>
+    </flowAccesses>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>Volunteer Guest User Flow Access</label>
+</PermissionSet>

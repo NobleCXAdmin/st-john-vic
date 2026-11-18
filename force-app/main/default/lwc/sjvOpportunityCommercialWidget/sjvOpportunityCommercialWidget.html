@@ -1,0 +1,180 @@
+<template>
+    <lightning-card title="St John VIC Commercial Governance &amp; Closed Won Gate" icon-name="standard:opportunity">
+        <div slot="actions">
+            <template if:false={isWon}>
+                <lightning-button-group>
+                    <template if:false={hasAcceptedQuote}>
+                        <lightning-button variant="brand-outline" label="Record Customer Acceptance" icon-name="utility:signpost" onclick={openAcceptanceModal}></lightning-button>
+                    </template>
+                    <lightning-button variant="brand" label="Verify Gates &amp; Close Won" icon-name="utility:lock" onclick={handleCloseWon} disabled={isCloseWonDisabled}></lightning-button>
+                </lightning-button-group>
+            </template>
+            <template if:true={isWon}>
+                <span class="slds-badge slds-theme_success slds-p-horizontal_medium slds-p-vertical_x-small">
+                    <lightning-icon icon-name="utility:check" size="xx-small" variant="inverse" class="slds-m-right_xx-small"></lightning-icon>
+                    Closed Won — Eligible for Rosterfy Hand-off
+                </span>
+            </template>
+        </div>
+
+        <div class="slds-p-horizontal_medium slds-p-bottom_medium">
+            <template if:true={isLoading}>
+                <lightning-spinner alternative-text="Processing Gate Verification" size="medium"></lightning-spinner>
+            </template>
+
+            <!-- Error Banner -->
+            <template if:true={errorMessage}>
+                <div class="slds-notify slds-notify_alert slds-alert_error slds-m-bottom_small" role="alert">
+                    <span class="slds-assistive-text">error</span>
+                    <h2>{errorMessage}</h2>
+                </div>
+            </template>
+
+            <!-- Success Banner -->
+            <template if:true={successMessage}>
+                <div class="slds-notify slds-notify_alert slds-alert_success slds-m-bottom_small" role="alert">
+                    <span class="slds-assistive-text">success</span>
+                    <h2>{successMessage}</h2>
+                </div>
+            </template>
+
+            <!-- Commercial Financial Summary -->
+            <div class="slds-box slds-theme_shade slds-m-bottom_medium">
+                <div class="slds-grid slds-gutters slds-wrap slds-grid_vertical-align-center">
+                    <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-3">
+                        <span class="slds-text-title_caps">Quoted Customer Revenue</span>
+                        <div class="slds-text-heading_medium slds-text-color_success">
+                            ${opportunityAmount}
+                        </div>
+                        <p class="slds-text-body_small slds-text-color_weak">Accepted Selling Price</p>
+                    </div>
+
+                    <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-3">
+                        <span class="slds-text-title_caps">Internal Delivery Cost</span>
+                        <div class="slds-text-heading_medium slds-text-color_error">
+                            ${internalCost}
+                        </div>
+                        <p class="slds-text-body_small slds-text-color_weak">Staff &amp; Asset Expenditure</p>
+                    </div>
+
+                    <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-3">
+                        <span class="slds-text-title_caps">Projected Gross Margin</span>
+                        <div class="slds-text-heading_medium">
+                            ${estimatedMargin} ({marginPercent}%)
+                        </div>
+                        <p class="slds-text-body_small slds-text-color_weak">Cost/Price Separation Enforced</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Closed Won Governance Checklist -->
+            <div class="slds-m-bottom_medium">
+                <h3 class="slds-text-title_bold slds-m-bottom_x-small">Server-Side Closed Won Gate Criteria</h3>
+                <div class="slds-grid slds-gutters slds-wrap">
+                    <!-- Gate 1 -->
+                    <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-m-bottom_x-small">
+                        <div class="slds-box slds-box_x-small slds-theme_default">
+                            <lightning-icon icon-name={gateAcceptedQuoteIcon} size="x-small" class="slds-m-right_x-small"></lightning-icon>
+                            <strong>1. Formal Quote Acceptance:</strong>
+                            <template if:true={gateAcceptedQuote}>
+                                <span class="slds-text-color_success slds-m-left_x-small">Accepted ({acceptedQuoteNumber})</span>
+                            </template>
+                            <template if:false={gateAcceptedQuote}>
+                                <span class="slds-text-color_error slds-m-left_x-small">Pending Acceptance Evidence</span>
+                            </template>
+                        </div>
+                    </div>
+
+                    <!-- Gate 2 -->
+                    <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-m-bottom_x-small">
+                        <div class="slds-box slds-box_x-small slds-theme_default">
+                            <lightning-icon icon-name={gateClinicalReviewIcon} size="x-small" class="slds-m-right_x-small"></lightning-icon>
+                            <strong>2. Clinical Risk Review:</strong>
+                            <span class="slds-m-left_x-small">{clinicalReviewStatus}</span>
+                        </div>
+                    </div>
+
+                    <!-- Gate 3 -->
+                    <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-m-bottom_x-small">
+                        <div class="slds-box slds-box_x-small slds-theme_default">
+                            <lightning-icon icon-name={gateOperationsReviewIcon} size="x-small" class="slds-m-right_x-small"></lightning-icon>
+                            <strong>3. Operations Feasibility:</strong>
+                            <span class="slds-m-left_x-small">{operationsReviewStatus}</span>
+                        </div>
+                    </div>
+
+                    <!-- Gate 4 -->
+                    <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-m-bottom_x-small">
+                        <div class="slds-box slds-box_x-small slds-theme_default">
+                            <lightning-icon icon-name={gateCreditClearanceIcon} size="x-small" class="slds-m-right_x-small"></lightning-icon>
+                            <strong>4. Finance Credit Clearance:</strong>
+                            <span class="slds-m-left_x-small">{creditReviewStatus}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Commercial Quotes & Acceptance Audit History -->
+            <template if:true={hasQuotes}>
+                <h3 class="slds-text-title_bold slds-m-bottom_x-small">Commercial Quotes ({quotes.length})</h3>
+                <table class="slds-table slds-table_cell-buffer slds-table_bordered">
+                    <thead>
+                        <tr class="slds-line-height_reset">
+                            <th scope="col">Quote Name</th>
+                            <th scope="col">Amount</th>
+                            <th scope="col">Delivery Cost</th>
+                            <th scope="col">Margin %</th>
+                            <th scope="col">Status</th>
+                            <th scope="col">Acceptance Evidence</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <template for:each={quotes} for:item="q">
+                            <tr key={q.Id}>
+                                <td><strong>{q.Name}</strong></td>
+                                <td>${q.GrandTotal}</td>
+                                <td>${q.SJV_Internal_Cost_Total__c}</td>
+                                <td>{q.SJV_Gross_Margin_Percent__c}%</td>
+                                <td>
+                                    <span class="slds-badge">{q.SJV_Acceptance_Status__c}</span>
+                                </td>
+                                <td>
+                                    <template if:true={q.isAccepted}>
+                                        <span class="slds-text-color_success">Evidence On File</span>
+                                    </template>
+                                    <template if:false={q.isAccepted}>
+                                        <lightning-button variant="base" label="Record Acceptance" data-id={q.Id} onclick={handleSelectQuoteToAccept}></lightning-button>
+                                    </template>
+                                </td>
+                            </tr>
+                        </template>
+                    </tbody>
+                </table>
+            </template>
+        </div>
+
+        <!-- ACCEPTANCE MODAL -->
+        <template if:true={isAcceptanceModalOpen}>
+            <section role="dialog" tabindex="-1" class="slds-modal slds-fade-in-open slds-modal_small" aria-modal="true">
+                <div class="slds-modal__container">
+                    <header class="slds-modal__header">
+                        <h2 class="slds-modal__title slds-hyphenate">Record Formal Quote Acceptance</h2>
+                        <p class="slds-m-top_x-small slds-text-color_weak">Record legally binding customer acceptance evidence prior to Closed Won gate.</p>
+                    </header>
+                    <div class="slds-modal__content slds-p-around_medium">
+                        <div class="slds-form slds-form_stacked">
+                            <lightning-combobox label="Acceptance Method" value={acceptanceInput.acceptanceMethod} options={acceptanceMethodOptions} onchange={handleMethodChange}></lightning-combobox>
+                            <lightning-input label="Evidence Reference / Document ID" value={acceptanceInput.evidenceReference} onchange={handleEvidenceChange} placeholder="e.g. Email from marcus.vance@example.com / Stored PDF Hash"></lightning-input>
+                            <lightning-textarea label="Acceptance Notes" value={acceptanceInput.notes} onchange={handleNotesChange} placeholder="Customer confirmed terms and authorized payment on delivery."></lightning-textarea>
+                        </div>
+                    </div>
+                    <footer class="slds-modal__footer">
+                        <lightning-button variant="neutral" label="Cancel" onclick={closeAcceptanceModal} class="slds-m-right_x-small"></lightning-button>
+                        <lightning-button variant="brand" label="Save Acceptance Evidence" onclick={handleSaveAcceptance}></lightning-button>
+                    </footer>
+                </div>
+            </section>
+            <div class="slds-backdrop slds-backdrop_open"></div>
+        </template>
+    </lightning-card>
+</template>

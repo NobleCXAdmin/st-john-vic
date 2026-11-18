@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RemoteSiteSetting xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Rosterfy API v2 endpoint. Required for SJV_RosterfyService HTTP callouts.</description>
+    <disableProtocolSecurity>false</disableProtocolSecurity>
+    <isActive>true</isActive>
+    <!-- Update this URL if your Rosterfy org uses a custom subdomain e.g. https://stjohnvic.rosterfy.com -->
+    <url>https://app.rosterfy.com</url>
+</RemoteSiteSetting>
+

@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Dashboard xmlns="http://soap.sforce.com/2006/04/metadata">
+    <backgroundEndColor>#FFFFFF</backgroundEndColor>
+    <backgroundFadeDirection>Diagonal</backgroundFadeDirection>
+    <backgroundStartColor>#F3F3F3</backgroundStartColor>
+    <dashboardType>SpecifiedUser</dashboardType>
+    <description>St John VIC event services — pipeline health, revenue, risk and quote metrics at a glance.</description>
+    <leftSection>
+        <columnSize>Medium</columnSize>
+        <components>
+            <chartAxisRange>Auto</chartAxisRange>
+            <componentType>Bar</componentType>
+            <displayUnits>Auto</displayUnits>
+            <drillEnabled>true</drillEnabled>
+            <drillToDetailEnabled>true</drillToDetailEnabled>
+            <enableHover>true</enableHover>
+            <header>Event Pipeline by Stage</header>
+            <legendPosition>Bottom</legendPosition>
+            <report>SJV_Event_Services/SJV_Pipeline_by_Stage</report>
+            <sortBy>RowLabelAscending</sortBy>
+            <showPercentage>false</showPercentage>
+            <showTotal>true</showTotal>
+            <showValues>true</showValues>
+            <title>Event Pipeline by Stage</title>
+            <useReportChart>true</useReportChart>
+        </components>
+        <components>
+            <chartAxisRange>Auto</chartAxisRange>
+            <componentType>Column</componentType>
+            <displayUnits>Auto</displayUnits>
+            <drillEnabled>true</drillEnabled>
+            <drillToDetailEnabled>true</drillToDetailEnabled>
+            <enableHover>true</enableHover>
+            <header>Revenue by Month</header>
+            <legendPosition>Bottom</legendPosition>
+            <report>SJV_Event_Services/SJV_Revenue_vs_Cost_by_Month</report>
+            <sortBy>RowLabelAscending</sortBy>
+            <showPercentage>false</showPercentage>
+            <showTotal>true</showTotal>
+            <showValues>false</showValues>
+            <title>Revenue by Month</title>
+            <useReportChart>true</useReportChart>
+        </components>
+    </leftSection>
+    <middleSection>
+        <columnSize>Medium</columnSize>
+        <components>
+            <chartAxisRange>Auto</chartAxisRange>
+            <componentType>Donut</componentType>
+            <displayUnits>Auto</displayUnits>
+            <drillEnabled>true</drillEnabled>
+            <drillToDetailEnabled>true</drillToDetailEnabled>
+            <enableHover>true</enableHover>
+            <header>Events by Pipeline Stage (Value Split)</header>
+            <legendPosition>Right</legendPosition>
+            <report>SJV_Event_Services/SJV_Risk_Band_Distribution</report>
+            <sortBy>RowLabelAscending</sortBy>
+            <showPercentage>true</showPercentage>
+            <showTotal>true</showTotal>
+            <showValues>true</showValues>
+            <title>Events by Stage (Value Split)</title>
+            <useReportChart>true</useReportChart>
+        </components>
+        <components>
+            <chartAxisRange>Auto</chartAxisRange>
+            <componentType>Bar</componentType>
+            <displayUnits>Auto</displayUnits>
+            <drillEnabled>true</drillEnabled>
+            <drillToDetailEnabled>true</drillToDetailEnabled>
+            <enableHover>true</enableHover>
+            <header>Win vs Lost Outcomes</header>
+            <legendPosition>Bottom</legendPosition>
+            <report>SJV_Event_Services/SJV_Win_vs_Lost_Rate</report>
+            <sortBy>RowLabelAscending</sortBy>
+            <showPercentage>true</showPercentage>
+            <showTotal>true</showTotal>
+            <showValues>true</showValues>
+            <title>Win vs Lost Outcomes</title>
+            <useReportChart>true</useReportChart>
+        </components>
+    </middleSection>
+    <rightSection>
+        <columnSize>Medium</columnSize>
+        <components>
+            <chartAxisRange>Auto</chartAxisRange>
+            <componentType>Donut</componentType>
+            <displayUnits>Auto</displayUnits>
+            <drillEnabled>true</drillEnabled>
+            <drillToDetailEnabled>true</drillToDetailEnabled>
+            <enableHover>true</enableHover>
+            <header>Closed Won vs Lost Revenue</header>
+            <legendPosition>Right</legendPosition>
+            <report>SJV_Event_Services/SJV_Quote_Acceptance_Status</report>
+            <sortBy>RowLabelAscending</sortBy>
+            <showPercentage>true</showPercentage>
+            <showTotal>true</showTotal>
+            <showValues>true</showValues>
+            <title>Closed Won vs Lost Revenue</title>
+            <useReportChart>true</useReportChart>
+        </components>
+    </rightSection>
+    <runningUser>ramtin@noblecx.com.au2026_11_9_8-56-21.demo</runningUser>
+    <textColor>#000000</textColor>
+    <title>St John VIC — Event Services Commercial Dashboard</title>
+    <titleColor>#000000</titleColor>
+    <titleSize>12</titleSize>
+</Dashboard>

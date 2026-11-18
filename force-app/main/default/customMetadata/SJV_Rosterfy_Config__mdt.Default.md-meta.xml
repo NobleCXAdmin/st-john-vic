@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <label>Default</label>
+    <protected>false</protected>
+    <values>
+        <field>Base_URL__c</field>
+        <value xsi:type="xsd:string">https://sja-aus.uat.rosterfy.com/api/v2</value>
+    </values>
+    <values>
+        <field>Default_Timezone__c</field>
+        <value xsi:type="xsd:string">Australia/Melbourne</value>
+    </values>
+    <values>
+        <field>Callout_Timeout_Seconds__c</field>
+        <value xsi:type="xsd:decimal">30</value>
+    </values>
+    <!-- ⚠️ Bearer_Token__c and Is_Active__c are intentionally OMITTED from source.
+         Set them directly in org via:
+         Setup > Custom Metadata Types > SJV Rosterfy Config > Manage Records > Default > Edit
+         Never commit a real Bearer token to source control. -->
+</CustomMetadata>
